@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Wall
+  - Missile
+  - Obstacle
+  - End Laser
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Player
+  - Ground
+  - Wall
+  - BackGround
+  - Obstacle
+  - Leds
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: BackGround 0
+    uniqueID: 1120318917
+    locked: 0
+  - name: BackGround 1
+    uniqueID: 2235461543
+    locked: 0
+  - name: BackGround 2
+    uniqueID: 3984375703
+    locked: 0
+  - name: Player
+    uniqueID: 3397374967
+    locked: 0
+  - name: Obstacles
+    uniqueID: 467147497
+    locked: 0
+  - name: Gems
+    uniqueID: 4236536573
+    locked: 0
+  - name: Leds
+    uniqueID: 241305923
+    locked: 0
