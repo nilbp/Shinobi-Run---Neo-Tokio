@@ -28,6 +28,8 @@ public class CharacterController2D : MonoBehaviour
     private Animator anim;
     private PlayerDead deadM;
     private bool dieCrushed;
+    private Vector3 targetVelocity;
+    private Collider2D[] colliders;
 
     private void Awake()
     {
@@ -51,7 +53,8 @@ public class CharacterController2D : MonoBehaviour
         anim.SetBool("IsGrounded", false);
         anim.SetBool("IsWalled", false);
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(m_WallCheckLeft.position, k_GroundedRadius, m_WhatIsObstacle);
+
+        colliders = Physics2D.OverlapCircleAll(m_WallCheckLeft.position, k_GroundedRadius, m_WhatIsObstacle);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
@@ -71,19 +74,23 @@ public class CharacterController2D : MonoBehaviour
             }
         }
 
+
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
+
         colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsObstacle);
         for (int i = 0; i < colliders.Length; i++)
         {
             if (colliders[i].gameObject != gameObject)
             {
                 m_Grounded = true;
-                m_TouchWallLeft = false;
-                m_TouchWallRight = false;
                 anim.SetBool("IsGrounded", true);
             }
         }
+        
+
+        Debug.Log("Grounded:  " + m_Grounded);
+        Debug.Log("Wall: " + m_TouchWallLeft);
 
         if(dieCrushed && m_Grounded)
         {
@@ -111,12 +118,52 @@ public class CharacterController2D : MonoBehaviour
         anim.SetBool("DownKey", down);
 
         // If crouching, check to see if the character can stand up
-        if (crouch)
+        /*if (crouch)
         {
             // If the character has a ceiling preventing them from standing up, keep them crouching
             if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsObstacle))
             {
                 crouch = true;
+            }
+        }*/
+
+        // Move the character by finding the target velocity
+
+        if (!m_TouchWallLeft && !m_TouchWallRight)
+        {
+            if (move > 0 && !m_FacingRight)
+            {
+                // ... flip the player.
+                Flip();
+            }
+            // Otherwise if the input is moving the player left and the player is facing right...
+            else if (move < 0 && m_FacingRight)
+            {
+                // ... flip the player.
+                Flip();
+            }
+
+            if (m_Grounded)
+            {
+                targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+
+                if (jump)
+                {
+                    // Add a vertical force to the player.
+                    m_Grounded = false;
+
+                    if (m_Grounded && down && m_rollTimer > 0)
+                        m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 3));
+
+                    else
+                        m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+                }
+            }
+
+            //Reduction of the movement if he is in the air
+            else if (!m_Grounded)
+            {
+                targetVelocity = new Vector2(move * 11f, m_Rigidbody2D.velocity.y);
             }
         }
 
@@ -125,8 +172,13 @@ public class CharacterController2D : MonoBehaviour
             dieCrushed = false;
             if (m_justTocuhWall)
             {
-                m_Rigidbody2D.velocity = new Vector2(0, 0);
+                targetVelocity = new Vector2(0, 0);
                 m_justTocuhWall = false;
+            }
+
+            if (m_Grounded)
+            {
+                targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
             }
 
             if (jump)
@@ -174,50 +226,15 @@ public class CharacterController2D : MonoBehaviour
                 m_CrouchDisableCollider.enabled = true;
         }
 
-        // Move the character by finding the target velocity
-        Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
-
-        if (m_Grounded)
-        {
-            
-
-        }
-        //Reduction of the movement if he is in the air
-        if (!m_Grounded)
-        {             
-            targetVelocity = new Vector2(move * 11f, m_Rigidbody2D.velocity.y);
-        }
-
-
         // And then smoothing it out and applying it to the character
         m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref velocity, m_MovementSmoothing);
 
         // If the input is moving the player right and the player is facing left...
-        if (move > 0 && !m_FacingRight)
-        {
-            // ... flip the player.
-            Flip();
-        }
-        // Otherwise if the input is moving the player left and the player is facing right...
-        else if (move < 0 && m_FacingRight)
-        {
-            // ... flip the player.
-            Flip();
-        }
         
 
+
         // If the player should jump...
-        if (m_Grounded && jump)
-        {
-            // Add a vertical force to the player.
-            m_Grounded = false;
-
-            if (m_Grounded && down && m_rollTimer > 0)
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 3));
-
-            else
-                m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-        }
+        
     }
 
 
