@@ -5,16 +5,22 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     public GameObject player;
-    public Camera selfCamera;
+    private Camera selfCamera;
     private const float floorDistance = 10; //depende del size de la camera
 
-    public Transform leftLimit;
-    public Transform rightLimit;
+    public Transform[] limits; //left, right, down, up
+
+    public float followPlayerSensibilityHorizontal;
+    public float followPlayerSensibilityVertical;
+
+    private Vector3 finalPos;
 
     private void Start()
     {
-        transform.position = new Vector3(player.transform.position.x, floorDistance, -100);
         selfCamera = GetComponent<Camera>();
+        selfCamera.orthographicSize = 20;
+
+        finalPos.z = -100;
     }
 
     void Update()
@@ -22,39 +28,51 @@ public class CameraManager : MonoBehaviour
         if (player == null)
             return;
 
+
         if (transform.position.y > 20)
-            selfCamera.orthographicSize = 20 + (player.transform.position.y - 20) * 0.1f;
+            selfCamera.orthographicSize = Mathf.Lerp (selfCamera.orthographicSize, 20 + (player.transform.position.y - 20) * 0.1f, 0.05f);
 
-        if (player.transform.position.x < leftLimit.position.x)
+        else
+            selfCamera.orthographicSize =  Mathf.Lerp(selfCamera.orthographicSize, 20, 0.01f);
+
+
+
+        //Horizontal Limits
+        if (player.transform.position.x < limits[0].position.x)
         {
-            if (player.transform.position.y > floorDistance)
-                transform.position = new Vector3(leftLimit.position.x, player.transform.position.y, -100);
-
-            else
-                transform.position = new Vector3(leftLimit.position.x, transform.position.y, -100);
-
-            return;
+            finalPos.x = Mathf.Lerp(transform.position.x, limits[0].transform.position.x + (selfCamera.orthographicSize * 1.2f - 20), followPlayerSensibilityHorizontal * 2);         
         }
 
-        else if (player.transform.position.x > rightLimit.position.x)
+        else if(player.transform.position.x > limits[1].position.x)
         {
-            if (player.transform.position.y > floorDistance)
-                transform.position = new Vector3(rightLimit.position.x, player.transform.position.y, -100);
-
-            else
-                transform.position = new Vector3(rightLimit.position.x, transform.position.y, -100);
-
-            return;
+            finalPos.x = Mathf.Lerp(transform.position.x, limits[1].transform.position.x - (selfCamera.orthographicSize * 1.2f - 20), followPlayerSensibilityHorizontal * 2);         
         }
 
         else
         {
-            if (player.transform.position.y > floorDistance)
-                transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -100);
-
-            else
-                transform.position = new Vector3(player.transform.position.x, transform.position.y, -100);
+            finalPos.x = Mathf.Lerp(transform.position.x, player.transform.position.x, followPlayerSensibilityHorizontal);
         }
+
+        //Vertical Limits
+        if (player.transform.position.y < limits[2].position.y)
+        {
+            finalPos.y = Mathf.Lerp(transform.position.y, limits[2].transform.position.y, followPlayerSensibilityVertical * 2);
+        }
+
+        else if (player.transform.position.y > limits[3].position.y)
+        {
+            finalPos.y = Mathf.Lerp(transform.position.y, limits[3].transform.position.y, followPlayerSensibilityVertical * 2);
+        }
+
+        else
+        {
+            finalPos.y = Mathf.Lerp(transform.position.y, player.transform.position.y, followPlayerSensibilityVertical);
+        }
+
+
         
+
+        transform.position = finalPos;
+
     }
 }

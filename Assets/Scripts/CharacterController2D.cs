@@ -89,8 +89,8 @@ public class CharacterController2D : MonoBehaviour
         }
         
 
-        Debug.Log("Grounded:  " + m_Grounded);
-        Debug.Log("Wall: " + m_TouchWallLeft);
+        //Debug.Log("Grounded:  " + m_Grounded);
+        //Debug.Log("Wall: " + m_TouchWallLeft);
 
         if(dieCrushed && m_Grounded)
         {

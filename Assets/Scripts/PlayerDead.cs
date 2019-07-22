@@ -6,7 +6,6 @@ public class PlayerDead : MonoBehaviour
 {
     public GameObject[] bodyParts;
     public GameObject explodeParticles;
-    public GameObject camera;
     public GameObject spawnEffect;
 
     private Rigidbody2D partRB;
@@ -20,9 +19,6 @@ public class PlayerDead : MonoBehaviour
     {
         GameObject g = Instantiate(explodeParticles);
         g.transform.position = transform.position;
-
-        GameObject c = Instantiate(camera);
-        c.transform.position = new Vector3 (transform.position.x , transform.position.y, -100);
 
         foreach(GameObject parts in bodyParts)
         {
@@ -48,9 +44,6 @@ public class PlayerDead : MonoBehaviour
 
         GameObject g = Instantiate(explodeParticles);
         g.transform.position = transform.position;
-
-        GameObject c = Instantiate(camera);
-        c.transform.position = new Vector3(transform.position.x, transform.position.y, -100);
 
         foreach (GameObject parts in bodyParts)
         {
