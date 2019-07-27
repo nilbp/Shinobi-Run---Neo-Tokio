@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class Button : MonoBehaviour
 {
-    void Start()
+    public GameObject rombo;
+    public string action;
+
+    public virtual void showRombo()
     {
-        
+        rombo.SetActive(true);
     }
 
-    private void OnMouseEnter()
+    public virtual void hideRombo()
     {
-        transform.localScale = transform.localScale * 1.2f;
-        Debug.Log("Mouse Over");
+        rombo.SetActive(false);
     }
 
-    private void OnMouseExit()
+    public virtual string pressedAction()
     {
-        transform.localScale = transform.localScale * 0.8f;
+        return action;
     }
 }

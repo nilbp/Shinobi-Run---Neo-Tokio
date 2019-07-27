@@ -8,6 +8,7 @@ TagManager:
   - Missile
   - Obstacle
   - End Laser
+  - MenuButton
   layers:
   - Default
   - TransparentFX

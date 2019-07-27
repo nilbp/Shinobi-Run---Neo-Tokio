@@ -6,9 +6,15 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Level.unity
-    guid: 6bd715e7d1303f143ac6e11af15bce17
+    path: Assets/Scenes/Main Menu.unity
+    guid: f63c8d3b28f28d045af40670cb97d734
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Ciutat/Nil 1.unity
+    guid: c7d2106074652b149a4fd9f4001cde14
+  - enabled: 1
+    path: Assets/Scenes/Ciutat/Nil 2.unity
+    guid: 6ec0a2fa61125544a8ffed0f81c11a1e
+  - enabled: 1
+    path: Assets/Scenes/Ciutat/POL2.unity
+    guid: d4b85db6b909f45cf82508a4bd544d8f
   m_configObjects: {}
