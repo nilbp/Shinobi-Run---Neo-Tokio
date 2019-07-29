@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3781,11 +3781,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.64000005
       objectReference: {fileID: 0}
-    - target: {fileID: 6757647887754709651, guid: ea92b008add19bd488d5d27954482ef1,
+    - target: {fileID: 4784783193705073777, guid: ea92b008add19bd488d5d27954482ef1,
         type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -46.4
-      objectReference: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1808926887}
     - target: {fileID: 6757647888009725010, guid: ea92b008add19bd488d5d27954482ef1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3796,11 +3796,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -10.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4784783193705073777, guid: ea92b008add19bd488d5d27954482ef1,
+    - target: {fileID: 6757647887754709651, guid: ea92b008add19bd488d5d27954482ef1,
         type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1808926887}
+      propertyPath: m_LocalPosition.y
+      value: -46.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea92b008add19bd488d5d27954482ef1, type: 3}
 --- !u!1 &970942627
@@ -4716,7 +4716,7 @@ SpriteRenderer:
   m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 4e30e75119202491f996576cb688f1db, type: 3}
-  m_Color: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}
+  m_Color: {r: 0.6886792, g: 0.6886792, b: 0.6886792, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -7680,11 +7680,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1232667761}
     m_Modifications:
-    - target: {fileID: 5983527417075096468, guid: da06b8c62f4fb417d9520b7d9a45bb30,
-        type: 3}
-      propertyPath: m_Name
-      value: fabriks4
-      objectReference: {fileID: 0}
     - target: {fileID: 5983527417075096474, guid: da06b8c62f4fb417d9520b7d9a45bb30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7740,6 +7735,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5983527417075096468, guid: da06b8c62f4fb417d9520b7d9a45bb30,
+        type: 3}
+      propertyPath: m_Name
+      value: fabriks4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da06b8c62f4fb417d9520b7d9a45bb30, type: 3}
 --- !u!1001 &7092989679571102733
@@ -7749,11 +7749,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1232667761}
     m_Modifications:
-    - target: {fileID: 7092989680740971073, guid: da86169f4d3724c8bac107f3854b284e,
-        type: 3}
-      propertyPath: m_Name
-      value: fabriks2
-      objectReference: {fileID: 0}
     - target: {fileID: 7092989680740971075, guid: da86169f4d3724c8bac107f3854b284e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7808,6 +7803,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7092989680740971073, guid: da86169f4d3724c8bac107f3854b284e,
+        type: 3}
+      propertyPath: m_Name
+      value: fabriks2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da86169f4d3724c8bac107f3854b284e, type: 3}
