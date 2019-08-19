@@ -55,6 +55,9 @@ TagManager:
   - name: BackGround 2
     uniqueID: 3984375703
     locked: 0
+  - name: Portals
+    uniqueID: 1316697211
+    locked: 0
   - name: Player
     uniqueID: 3397374967
     locked: 0
@@ -66,4 +69,7 @@ TagManager:
     locked: 0
   - name: Leds
     uniqueID: 241305923
+    locked: 0
+  - name: efectsllum
+    uniqueID: 135532867
     locked: 0

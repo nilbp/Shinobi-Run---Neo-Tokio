@@ -10,6 +10,8 @@ public class PlayerDead : MonoBehaviour
 
     private Rigidbody2D partRB;
 
+    public bool isDead;
+
     private void Start()
     {
         spawn();
@@ -17,6 +19,9 @@ public class PlayerDead : MonoBehaviour
 
     public void dieExploded()
     {
+        if (isDead)
+            return;
+
         GameObject g = Instantiate(explodeParticles);
         g.transform.position = transform.position;
 
@@ -30,17 +35,27 @@ public class PlayerDead : MonoBehaviour
         }
 
         Destroy(gameObject);
+
+        isDead = true;
         return;
     }
 
     public void dieSliced()
     {
+        if (isDead)
+            return;
 
+        //Dead code
+
+        isDead = true;
     }
 
     public void dieCrushed()
     {
         Debug.Log("Die Crushed");
+
+        if (isDead)
+            return;
 
         GameObject g = Instantiate(explodeParticles);
         g.transform.position = transform.position;
@@ -55,6 +70,9 @@ public class PlayerDead : MonoBehaviour
         }
 
         Destroy(gameObject);
+
+        isDead = true;
+
         return;
     }
 

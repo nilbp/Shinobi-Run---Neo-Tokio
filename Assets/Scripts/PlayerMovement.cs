@@ -13,9 +13,14 @@ public class PlayerMovement : MonoBehaviour
     bool crouch = false;
     bool down = false;
 
+    public bool absorbing;
+
     // Update is called once per frame
     void Update()
     {
+        if (GameMaster.endLevel)
+            return;
+
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 
         if (Input.GetButtonDown("Jump"))

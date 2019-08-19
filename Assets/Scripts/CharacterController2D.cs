@@ -2,7 +2,7 @@
 
 public class CharacterController2D : MonoBehaviour
 {
-    [SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
+    private float m_JumpForce = 1500f;                          // Amount of force added when the player jumps.
     [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
     [Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
     [SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
@@ -30,6 +30,8 @@ public class CharacterController2D : MonoBehaviour
     private bool dieCrushed;
     private Vector3 targetVelocity;
     private Collider2D[] colliders;
+
+	private bool doubleJump = false;
 
     private void Awake()
     {
@@ -143,31 +145,50 @@ public class CharacterController2D : MonoBehaviour
                 Flip();
             }
 
-            if (m_Grounded)
+
+			if(m_Rigidbody2D.velocity.y < -25f)
+		    {
+			    doubleJump = false;
+		    }
+
+			if (jump && doubleJump)
+			{
+				m_Rigidbody2D.velocity = Vector3.zero;
+
+				m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 1.15f));
+				doubleJump = false;
+				Debug.Log("double jump");
+			}
+
+			if (m_Grounded)
             {
                 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
 
-                if (jump)
+				if (jump)
                 {
-                    // Add a vertical force to the player.
-                    m_Grounded = false;
+			        Debug.Log("jump");
+					m_Rigidbody2D.velocity = Vector3.zero;
+					m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce*0.8f));
 
-                    if (m_Grounded && down && m_rollTimer > 0)
-                        m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce * 3));
-
-                    else
-                        m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+					doubleJump = true;
                 }
+
             }
+
+            
 
             //Reduction of the movement if he is in the air
             else if (!m_Grounded)
             {
                 targetVelocity = new Vector2(move * 11f, m_Rigidbody2D.velocity.y);
-            }
-        }
+				//doubleJump = true;
 
-        if (m_TouchWallLeft || m_TouchWallRight)
+			}
+		}
+
+        
+
+		if (m_TouchWallLeft || m_TouchWallRight)
         {
             dieCrushed = false;
             if (m_justTocuhWall)
@@ -184,12 +205,13 @@ public class CharacterController2D : MonoBehaviour
             if (jump)
             {
                 if (m_FacingRight)
-                    m_Rigidbody2D.AddForce(new Vector2(-m_JumpForce * 1.3f, m_JumpForce * 0.9f));
+                    m_Rigidbody2D.AddForce(new Vector2(-m_JumpForce * 1.8f, m_JumpForce * 1.2f));
 
                 if (!m_FacingRight)
-                    m_Rigidbody2D.AddForce(new Vector2(m_JumpForce * 1.3f, m_JumpForce * 0.9f));
+                    m_Rigidbody2D.AddForce(new Vector2(m_JumpForce * 1.8f, m_JumpForce * 1.2f));
 
                 Flip();
+				doubleJump = true;
             }
 
             //si no esta sortint del wall
